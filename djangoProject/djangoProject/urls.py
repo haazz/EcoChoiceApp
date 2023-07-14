@@ -26,7 +26,7 @@ router = routers.DefaultRouter()
 router.register(r'companies', views.CompanyViewSet)
 
 urlpatterns = [
-    #re_path('^companies/(?P<keyword>.+)/$', views.SearchList.as_view()),
+    path('companies/search', views.SearchList.as_view()),
     path('admin/', admin.site.urls),
     path('', include(router.urls)),
     path('app_login', views.app_login),
