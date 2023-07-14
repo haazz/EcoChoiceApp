@@ -24,13 +24,12 @@ from restapi import views
 
 router = routers.DefaultRouter()
 router.register(r'companies', views.CompanyViewSet)
+router.register(r'quiz', views.QuizViewSet)
 
 urlpatterns = [
-    path('search', views.SearchList.as_view()),
     path('admin/', admin.site.urls),
     path('', include(router.urls)),
     path('app_login', views.app_login),
     path('app_signup', views.app_signup),
-    re_path('^search/(?P<keyword>.+)/$', views.SearchList.as_view()),
 ]
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

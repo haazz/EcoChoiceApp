@@ -13,8 +13,8 @@ from rest_framework import generics
 from rest_framework_api_key.permissions import HasAPIKey
 
 
-from restapi.models import User, Company
-from restapi.serializers import CompanySerializer
+from restapi.models import User, Company, Quiz
+from restapi.serializers import CompanySerializer, QuizSerializer
 
 from .serializers import UserSerailizer
 import json
@@ -23,26 +23,10 @@ class CompanyViewSet(viewsets.ModelViewSet):
     queryset = Company.objects.all()
     serializer_class = CompanySerializer
 
+class QuizViewSet(viewsets.ModelViewSet):
+    queryset = Quiz.objects.all()
+    serializer_class = QuizSerializer
 
-def search(request, keyword):
-    if request.method == 'GET':
-        keyword
-class SearchList(generics.ListAPIView):
-    serializer_class = CompanySerializer
-    def get_queryset(self):
-        data = json.loads(self.request.data)
-        keyword = data
-        print("search 리퀘스트 로그" + str(keyword))
-        return Company.objects.filter(company_name__contains=keyword)
-
-
-    # if request.method == 'POST':
-    #
-    #     data = json.loads(request.body)
-    #     keyword = data.get('keyword')
-    #     company_list =
-    #     if company_list is not None:
-    #         return company_list
 
 @method_decorator(csrf_exempt, name='dispatch')
 def app_signup(request):
