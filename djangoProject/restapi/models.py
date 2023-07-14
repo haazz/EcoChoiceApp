@@ -5,7 +5,7 @@ from django.db import models
 class User(models.Model):
     useremail = models.CharField(max_length=128, unique=True)
     userpw = models.CharField(max_length=128)
-    username = models.CharField(max_length=16)
+    username = models.CharField(max_length=16, unique=True)
     created = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):

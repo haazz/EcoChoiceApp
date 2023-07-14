@@ -26,7 +26,7 @@ def app_signup(request):
     if request.method == 'POST':
         data = JSONParser().parse(request)
         serializer = UserSerailizer(data=data)
-        if serializer.is_valid():
+        if serializer.is_valid() and :
             serializer.save()
             return JsonResponse({'code': '0000'})
         return JsonResponse({'code': '0001'})

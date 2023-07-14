@@ -28,5 +28,7 @@ router.register(r'companies', views.CompanyViewSet)
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include(router.urls)),
+    path('app_login', views.app_login),
+    path('app_signup', views.app_signup),
 ]
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
