@@ -23,12 +23,17 @@ class CompanyViewSet(viewsets.ModelViewSet):
     queryset = Company.objects.all()
     serializer_class = CompanySerializer
 
+
+def search(request, keyword):
+    if request.method == 'GET':
+        keyword
 class SearchList(generics.ListAPIView):
     serializer_class = CompanySerializer
     def get_queryset(self):
-        keyword = self.request
+        data = json.loads(self.request.data)
+        keyword = data
         print("search 리퀘스트 로그" + str(keyword))
-        return Company.objects.filter(company_name=keyword)
+        return Company.objects.filter(company_name__contains=keyword)
 
 
     # if request.method == 'POST':

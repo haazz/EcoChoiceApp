@@ -26,10 +26,11 @@ router = routers.DefaultRouter()
 router.register(r'companies', views.CompanyViewSet)
 
 urlpatterns = [
-    path('companies/search', views.SearchList.as_view()),
+    path('search', views.SearchList.as_view()),
     path('admin/', admin.site.urls),
     path('', include(router.urls)),
     path('app_login', views.app_login),
     path('app_signup', views.app_signup),
+    re_path('^search/(?P<keyword>.+)/$', views.SearchList.as_view()),
 ]
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
