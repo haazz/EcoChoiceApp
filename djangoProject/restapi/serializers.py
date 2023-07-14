@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from restapi.models import Test, User, Company
+from restapi.models import User, Company
 
 class UserSerailizer(serializers.ModelSerializer):
     class Meta:
