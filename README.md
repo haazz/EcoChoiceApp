@@ -1,0 +1,2 @@
+# EcoChoiceApp
+android + django + mysql
