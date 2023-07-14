@@ -17,7 +17,7 @@ Including another URLconf
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
-from django.urls import path, include
+from django.urls import path, include, re_path
 
 from rest_framework import routers
 from restapi import views
@@ -26,6 +26,7 @@ router = routers.DefaultRouter()
 router.register(r'companies', views.CompanyViewSet)
 
 urlpatterns = [
+    re_path('^companies/(?P<keyword>.+)/$', views.SearchList.as_view()),
     path('admin/', admin.site.urls),
     path('', include(router.urls)),
     path('app_login', views.app_login),

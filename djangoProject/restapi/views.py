@@ -9,7 +9,9 @@ from rest_framework import  viewsets
 from rest_framework.parsers import JSONParser
 from rest_framework.views import APIView
 from rest_framework.decorators import api_view
+from rest_framework import generics
 from rest_framework_api_key.permissions import HasAPIKey
+
 
 from restapi.models import User, Company
 from restapi.serializers import CompanySerializer
@@ -21,12 +23,28 @@ class CompanyViewSet(viewsets.ModelViewSet):
     queryset = Company.objects.all()
     serializer_class = CompanySerializer
 
+class SearchList(generics.ListAPIView):
+    serializer_class = CompanySerializer
+    def get_queryset(self):
+        keyword = self.request
+        print("search 리퀘스트 로그" + str(keyword))
+        return Company.objects.filter(company_name__contains=keyword)
+
+
+    # if request.method == 'POST':
+    #
+    #     data = json.loads(request.body)
+    #     keyword = data.get('keyword')
+    #     company_list =
+    #     if company_list is not None:
+    #         return company_list
+
 @method_decorator(csrf_exempt, name='dispatch')
 def app_signup(request):
     if request.method == 'POST':
         data = JSONParser().parse(request)
         serializer = UserSerailizer(data=data)
-        if serializer.is_valid() and :
+        if serializer.is_valid():
             serializer.save()
             return JsonResponse({'code': '0000'})
         return JsonResponse({'code': '0001'})
@@ -34,7 +52,7 @@ def app_signup(request):
 @method_decorator(csrf_exempt, name='dispatch')
 def app_login(request):
     if request.method == 'POST':
-        print("리퀘스트 로그" + str(request.body))
+        print("login 리퀘스트 로그" + str(request.body))
         data = json.loads(request.body)
         email = data.get('useremail')
         pw = data.get('userpw')
