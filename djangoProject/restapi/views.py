@@ -28,7 +28,7 @@ class SearchList(generics.ListAPIView):
     def get_queryset(self):
         keyword = self.request
         print("search 리퀘스트 로그" + str(keyword))
-        return Company.objects.filter(company_name__contains=keyword)
+        return Company.objects.filter(company_name=keyword)
 
 
     # if request.method == 'POST':
