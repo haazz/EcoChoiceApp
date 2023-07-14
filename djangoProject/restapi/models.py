@@ -21,7 +21,6 @@ class Quiz(models.Model):
     wrong_answer1 = models.CharField(max_length=50)
     wrong_answer2 = models.CharField(max_length=50)
     wrong_answer3 = models.CharField(max_length=50)
-    wrong_answer4 = models.CharField(max_length=50)
 
     def __str__(self):
         return self.question
