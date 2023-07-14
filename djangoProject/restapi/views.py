@@ -48,10 +48,10 @@ def app_login(request):
 
         print("email = " + email + " pw = " + pw)
 
-        userdata = User.objects.filter(useremail=email)
-        if userdata.filter(userpw=pw).exists()
+        try:
+            userdata = User.objects.get(useremail=email, userpw=pw)
             print("로그인 성공!")
             return JsonResponse({'code': '0000'}, status=200)
-        else:
+        except:
             print("실패")
             return JsonResponse({'code': '0001'}, status=200)
