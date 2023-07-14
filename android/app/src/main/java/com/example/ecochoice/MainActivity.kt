@@ -7,17 +7,48 @@ import com.example.ecochoice.databinding.ActivityMainBinding
 class MainActivity : AppCompatActivity() {
 
     val binding : ActivityMainBinding by lazy { ActivityMainBinding.inflate(layoutInflater) }
+    var editstring : String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
-        supportFragmentManager
-            .beginTransaction()
-            .replace(binding.mainFrame.id, FragmentHome())
-            .commitAllowingStateLoss()
+        val checkfragment = intent.getStringExtra("fragment")
 
-        binding.bottomNavigationView.selectedItemId = R.id.home
+        if(checkfragment != null){
+            if(checkfragment == "company"){
+                editstring = intent.getStringExtra("editstring").toString()
+
+                binding.bottomNavigationView.selectedItemId = R.id.company
+                val fragment = FragmentCompany()
+                val bundle = Bundle()
+                bundle.putString("editstring", editstring)
+                fragment.arguments = bundle
+                supportFragmentManager
+                    .beginTransaction()
+                    .replace(binding.mainFrame.id, fragment)
+                    .commitAllowingStateLoss()
+            }else{
+                editstring = intent.getStringExtra("editstring").toString()
+
+                binding.bottomNavigationView.selectedItemId = R.id.company
+                val fragment = FragmentProduct()
+                val bundle = Bundle()
+                bundle.putString("editstring", editstring)
+                fragment.arguments = bundle
+                supportFragmentManager
+                    .beginTransaction()
+                    .replace(binding.mainFrame.id, fragment)
+                    .commitAllowingStateLoss()
+            }
+        }else{
+            supportFragmentManager
+                .beginTransaction()
+                .replace(binding.mainFrame.id, FragmentHome())
+                .commitAllowingStateLoss()
+
+            binding.bottomNavigationView.selectedItemId = R.id.home
+        }
 
         binding.bottomNavigationView.setOnItemSelectedListener { menuItem ->
             when (menuItem.itemId) {
@@ -25,6 +56,13 @@ class MainActivity : AppCompatActivity() {
                     supportFragmentManager
                         .beginTransaction()
                         .replace(binding.mainFrame.id, FragmentCompany())
+                        .commitAllowingStateLoss()
+                    true
+                }
+                R.id.quiz -> {
+                    supportFragmentManager
+                        .beginTransaction()
+                        .replace(binding.mainFrame.id, FragmentQuiz())
                         .commitAllowingStateLoss()
                     true
                 }
@@ -42,7 +80,13 @@ class MainActivity : AppCompatActivity() {
                         .commitAllowingStateLoss()
                     true
                 }
-
+                R.id.mypage -> {
+                    supportFragmentManager
+                        .beginTransaction()
+                        .replace(binding.mainFrame.id, FragmentMypage())
+                        .commitAllowingStateLoss()
+                    true
+                }
                 else -> false
             }
         }

@@ -53,7 +53,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView7" />
 
     <EditText
-        android:id="@+id/as_edit_nick"
+        android:id="@+id/ad_edit_nick"
         android:layout_width="240dp"
         android:layout_height="40dp"
         android:layout_marginTop="60dp"
@@ -73,10 +73,12 @@
         android:background="@drawable/edit_shape"
         android:ems="10"
         android:hint="이메일 입력"
+        android:singleLine="true"
         android:inputType="textEmailAddress"
         android:paddingLeft="15dp"
-        app:layout_constraintEnd_toEndOf="@+id/as_edit_nick"
-        app:layout_constraintTop_toBottomOf="@+id/as_edit_nick" />
+        android:paddingRight="15dp"
+        app:layout_constraintEnd_toEndOf="@+id/ad_edit_nick"
+        app:layout_constraintTop_toBottomOf="@+id/ad_edit_nick" />
 
     <EditText
         android:id="@+id/ad_edit_password"
@@ -111,9 +113,9 @@
         android:layout_marginStart="15dp"
         android:text="닉네임"
         android:textColor="@color/text"
-        app:layout_constraintBottom_toBottomOf="@+id/as_edit_nick"
+        app:layout_constraintBottom_toBottomOf="@+id/ad_edit_nick"
         app:layout_constraintStart_toStartOf="@+id/view3"
-        app:layout_constraintTop_toTopOf="@+id/as_edit_nick" />
+        app:layout_constraintTop_toTopOf="@+id/ad_edit_nick" />
 
     <TextView
         android:id="@+id/textView9"

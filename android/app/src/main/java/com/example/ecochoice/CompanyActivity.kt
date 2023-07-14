@@ -48,7 +48,7 @@ class CompanyActivity : AppCompatActivity() {
         yAxisLeft.textSize = 14f
         yAxisLeft.textColor = Color.rgb(163, 163, 163)
         yAxisLeft.setDrawAxisLine(false)
-        yAxisLeft.axisMinimum = 0f
+        yAxisLeft.axisMinimum = -0.1f
         yAxisLeft.axisMaximum = 6.1f
         yAxisLeft.granularity = 1f
 

@@ -7,11 +7,13 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import com.example.ecochoice.databinding.ActivityMainBinding
 import com.example.ecochoice.databinding.FragmentCompanyBinding
 import retrofit2.Call
 import retrofit2.Callback
@@ -26,18 +28,16 @@ class FragmentCompany : Fragment() {
     }
 
     lateinit var mainActivity: MainActivity
-    private var companyList = mutableListOf<Company>()
     private var searchList: List<Company> = listOf()
+    private lateinit var companyadapter : AdapterCompany
+    private var companylist = listOf<Company>()
+    private lateinit var recyclerView: RecyclerView
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
 
         mainActivity = context as MainActivity
     }
-
-    private lateinit var companyadapter : AdapterCompany
-    private var companylist = listOf<Company>()
-    private lateinit var recyclerView: RecyclerView
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -72,8 +72,15 @@ class FragmentCompany : Fragment() {
                     val companyList = response.body()
                     if (companyList != null) {
                         companylist = companyList
-                        companyadapter.setList(companylist)
-                        companyadapter.notifyDataSetChanged()
+
+                        val bundle = arguments
+                        if (bundle != null) {
+                            val value = bundle.getString("editstring").toString()
+                            search(value)
+                        }else{
+                            companyadapter.setList(companylist)
+                            companyadapter.notifyDataSetChanged()
+                        }
                     }
                 } else {
                     Log.e("RetrofitService", "Response failed: ${response.code()}")
@@ -86,19 +93,22 @@ class FragmentCompany : Fragment() {
             }
         })
         binding.fcSearchBtn.setOnClickListener {
-            search()
+            val searchKeyword = binding.fcEditCompany.text.toString()
+            search(searchKeyword)
         }
 
         return binding.root
     }
 
-    private fun search(){
-        val searchKeyword = binding.fcEditCompany.text.toString()
-
+    private fun search(searchKeyword : String){
         searchList = companylist.filter { company ->
             company.companyname.contains(searchKeyword, ignoreCase = true)
         }
         companyadapter.setList(searchList)
         companyadapter.notifyDataSetChanged()
+
+        if(searchList.size < 1){
+            Toast.makeText(requireContext(), "일치하는 기업 정보가 없습니다.", Toast.LENGTH_SHORT).show()
+        }
     }
 }
