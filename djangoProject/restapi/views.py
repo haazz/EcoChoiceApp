@@ -14,8 +14,8 @@ from rest_framework_api_key.permissions import HasAPIKey
 from rest_framework.decorators import permission_classes
 from rest_framework_api_key.models import APIKey
 
-from restapi.models import User, Company, Quiz
-from restapi.serializers import CompanySerializer, QuizSerializer
+from restapi.models import User, Company, Quiz, Product
+from restapi.serializers import CompanySerializer, QuizSerializer, ProductSerializer
 
 from .serializers import UserSerailizer
 import json
@@ -34,6 +34,15 @@ class QuizViewSet(viewsets.ModelViewSet):
 class ProductViewSet(viewsets.ModelViewSet):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
+
+@permission_classes([HasAPIKey])
+@method_decorator(csrf_exempt, name='dispatch')
+def mileage(request):
+    if request.method == 'GET':
+        apikey = request.META.get('Authorization')
+        apikey_split = apikey.split(' ')
+        keys = APIKey.objects.get(prefix=apikey_split[1][0:8])
+        print(keys)
 
 @method_decorator(csrf_exempt, name='dispatch')
 def app_signup(request):
@@ -59,7 +68,7 @@ def app_login(request):
             userdata = User.objects.get(useremail=email, userpw=pw)
             print("로그인 성공!")
 
-            api_key, key = APIKey.objects.create_key(name=request.user.username)
+            api_key, key = APIKey.objects.create_key(name=email)
             api_key.save()
 
             return JsonResponse({'code': '0000', 'apikey': key}, status=200)

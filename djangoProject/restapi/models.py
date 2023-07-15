@@ -6,6 +6,7 @@ class User(models.Model):
     useremail = models.CharField(max_length=128, unique=True)
     userpw = models.CharField(max_length=128)
     username = models.CharField(max_length=16, unique=True)
+    mileage = models.IntegerField(default=0),
     created = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
@@ -39,11 +40,6 @@ class Product(models.Model):
 
     class Meta :
         db_table = 'green_product'
-
-class Todolist(models.Model):
-    todoimg = models.ImageField(upload_to=settings.MEDIA_ROOT)
-    def __str__(self):
-        return self.pk
 
 class Company(models.Model):
     company_name = models.CharField(primary_key=True, max_length=20)
