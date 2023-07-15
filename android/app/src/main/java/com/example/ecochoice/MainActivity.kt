@@ -1,5 +1,6 @@
 package com.example.ecochoice
 
+import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.example.ecochoice.databinding.ActivityMainBinding
@@ -31,7 +32,7 @@ class MainActivity : AppCompatActivity() {
             }else{
                 editstring = intent.getStringExtra("editstring").toString()
 
-                binding.bottomNavigationView.selectedItemId = R.id.company
+                binding.bottomNavigationView.selectedItemId = R.id.product
                 val fragment = FragmentProduct()
                 val bundle = Bundle()
                 bundle.putString("editstring", editstring)

@@ -13,9 +13,15 @@ class AdapterProduct (private val context: Context) : RecyclerView.Adapter<Adapt
     inner class MyView(private val binding: ProductListBinding): RecyclerView.ViewHolder(binding.root) {
         fun bind(pos: Int) {
             val response = productlist[pos]
-            val intent = Intent(context, WebActivity::class.java)
-            intent.putExtra("url", response.producturl)
-            context.startActivity(intent)
+            binding.textCode.text = response.productcode
+            binding.textCompany.text = response.companyname
+
+            binding.root.setOnClickListener {
+                val response = productlist[pos]
+                val intent = Intent(context, WebActivity::class.java)
+                intent.putExtra("url", response.producturl)
+                context.startActivity(intent)
+            }
         }
     }
 

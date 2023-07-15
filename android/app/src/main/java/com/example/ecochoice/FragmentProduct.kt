@@ -27,6 +27,7 @@ class FragmentProduct : Fragment() {
 
     lateinit var mainActivity: MainActivity
     private var searchList: List<Product> = listOf()
+    private var nullcheckList: List<Product> = listOf()
     private lateinit var productadapter : AdapterProduct
     private var productlist = listOf<Product>()
     private lateinit var recyclerView: RecyclerView
@@ -69,13 +70,14 @@ class FragmentProduct : Fragment() {
                     val productList = response.body()
                     if (productList != null) {
                         productlist = productList
+                        nullcheck()
 
                         val bundle = arguments
                         if (bundle != null) {
                             val value = bundle.getString("editstring").toString()
                             search(value)
                         }else{
-                            productadapter.setList(productlist)
+                            productadapter.setList(nullcheckList)
                             productadapter.notifyDataSetChanged()
                         }
                     }
@@ -90,10 +92,15 @@ class FragmentProduct : Fragment() {
             }
         })
 
+        binding.fpSearchBtn.setOnClickListener {
+            val searchKeyword = binding.fpEditProduct.text.toString()
+            search(searchKeyword)
+        }
+
         return binding.root
     }
     private fun search(searchKeyword : String){
-        searchList = productlist.filter { product ->
+        searchList = nullcheckList.filter { product ->
             product.productname.contains(searchKeyword, ignoreCase = true)
         }
         productadapter.setList(searchList)
@@ -101,6 +108,12 @@ class FragmentProduct : Fragment() {
 
         if(searchList.size < 1){
             Toast.makeText(requireContext(), "일치하는 제품 정보가 없습니다.", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun nullcheck() {
+        nullcheckList = productlist.filter { product ->
+            product.productname != null && product.productname.contains(product.companyname)
         }
     }
 }

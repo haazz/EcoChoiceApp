@@ -161,5 +161,16 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ad_edit_pwcheck" />
 
+    <TextView
+        android:id="@+id/pwchecktext"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="18dp"
+        android:text="text"
+        android:textColor="#ff0000"
+        android:visibility="invisible"
+        app:layout_constraintStart_toStartOf="@+id/ad_edit_pwcheck"
+        app:layout_constraintTop_toBottomOf="@+id/ad_edit_pwcheck" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -13,9 +13,12 @@ class WebActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
-        val webview = binding.webview
-        webview.settings.javaScriptEnabled = true
-        webview.webViewClient = WebViewClient()
-        webview.loadUrl("https://www.naver.com/")
+        val url = intent.getStringExtra("url")
+        if(url != null){
+            val webview = binding.webview
+            webview.settings.javaScriptEnabled = true
+            webview.webViewClient = WebViewClient()
+            webview.loadUrl(url)
+        }
     }
 }

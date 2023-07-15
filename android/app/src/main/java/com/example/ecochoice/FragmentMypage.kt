@@ -21,8 +21,7 @@ class FragmentMypage : Fragment() {
     ): View? {
 
         binding.btnLogout.setOnClickListener {
-            //val intent = Intent(requireContext(), LoginActivity::class.java)
-            val intent = Intent(requireContext(), WebActivity::class.java)
+            val intent = Intent(requireContext(), LoginActivity::class.java)
             startActivity(intent)
         }
 

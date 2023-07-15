@@ -19,7 +19,6 @@ class FragmentHome : Fragment() {
     private val binding: FragmentHomeBinding by lazy {
         FragmentHomeBinding.inflate(layoutInflater)
     }
-    private val mainbinding: ActivityMainBinding by lazy {ActivityMainBinding.inflate(layoutInflater)}
 
     private lateinit var mainActivity: MainActivity
 
@@ -72,8 +71,6 @@ class FragmentHome : Fragment() {
         val drawableResId = drawableList[hometoday()]
         binding.today.setImageResource(drawableResId)
 
-        val fragmentManager = requireActivity().supportFragmentManager
-
         binding.fhSearchBtn.setOnClickListener {
             if(binding.fhEditHome.text.isEmpty()){
                 Toast.makeText(requireContext(), "검색란이 비었습니다.", Toast.LENGTH_SHORT).show()
@@ -102,6 +99,6 @@ class FragmentHome : Fragment() {
     }
 
     fun hometoday(): Int {
-        return Random().nextInt(31)+1
+        return Random().nextInt(32)
     }
 }
