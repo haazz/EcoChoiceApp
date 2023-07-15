@@ -67,9 +67,9 @@ def app_login(request):
         try:
             userdata = User.objects.get(useremail=email, userpw=pw)
             print("로그인 성공!")
-            username = User.objects.filter(useremail=email)
+            username = User.objects.filter(useremail=email).get('username')
             print(username)
-            return JsonResponse({'code': '0000', 'username': '0'}, status=200)
+            return JsonResponse({'code': '0000', 'username': username}, status=200)
         except:
             print("실패")
             return JsonResponse({'code': '0001'}, status=200)
