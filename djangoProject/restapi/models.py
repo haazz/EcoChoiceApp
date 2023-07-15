@@ -1,5 +1,5 @@
 from django.db import models
-
+from django.conf import settings
 # Create your models here.
 
 class User(models.Model):
@@ -27,6 +27,23 @@ class Quiz(models.Model):
 
     class Meta :
         db_table = 'quiz'
+
+class Product(models.Model):
+    product_name = models.CharField(max_length=128, null=True)
+    product_url = models.CharField(max_length=128, null=True)
+    product_code = models.CharField(max_length=128, null=True)
+    company_name = models.CharField(primary_key=True, max_length=20)
+
+    def __str__(self):
+        return self.product_name
+
+    class Meta :
+        db_table = 'green_product'
+
+class Todolist(models.Model):
+    todoimg = models.ImageField(upload_to=settings.MEDIA_ROOT)
+    def __str__(self):
+        return self.pk
 
 class Company(models.Model):
     company_name = models.CharField(primary_key=True, max_length=20)

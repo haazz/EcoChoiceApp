@@ -11,7 +11,8 @@ from rest_framework.views import APIView
 from rest_framework.decorators import api_view
 from rest_framework import generics
 from rest_framework_api_key.permissions import HasAPIKey
-
+from rest_framework.decorators import permission_classes
+from rest_framework_api_key.models import APIKey
 
 from restapi.models import User, Company, Quiz
 from restapi.serializers import CompanySerializer, QuizSerializer
@@ -19,14 +20,20 @@ from restapi.serializers import CompanySerializer, QuizSerializer
 from .serializers import UserSerailizer
 import json
 
+@permission_classes([HasAPIKey])
 class CompanyViewSet(viewsets.ModelViewSet):
     queryset = Company.objects.all()
     serializer_class = CompanySerializer
 
+@permission_classes([HasAPIKey])
 class QuizViewSet(viewsets.ModelViewSet):
     queryset = Quiz.objects.all()
     serializer_class = QuizSerializer
 
+@permission_classes([HasAPIKey])
+class ProductViewSet(viewsets.ModelViewSet):
+    queryset = Product.objects.all()
+    serializer_class = ProductSerializer
 
 @method_decorator(csrf_exempt, name='dispatch')
 def app_signup(request):
@@ -51,7 +58,11 @@ def app_login(request):
         try:
             userdata = User.objects.get(useremail=email, userpw=pw)
             print("로그인 성공!")
-            return JsonResponse({'code': '0000'}, status=200)
+
+            api_key, key = APIKey.objects.create_key(name=request.user.username)
+            api_key.save()
+
+            return JsonResponse({'code': '0000', 'apikey': key}, status=200)
         except:
             print("실패")
             return JsonResponse({'code': '0001'}, status=200)

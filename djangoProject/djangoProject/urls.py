@@ -25,6 +25,7 @@ from restapi import views
 router = routers.DefaultRouter()
 router.register(r'companies', views.CompanyViewSet)
 router.register(r'quiz', views.QuizViewSet)
+router.register(r'product', views.ProductViewSet)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -33,3 +34,4 @@ urlpatterns = [
     path('app_signup', views.app_signup),
 ]
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
