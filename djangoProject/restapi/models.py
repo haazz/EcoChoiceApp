@@ -40,6 +40,7 @@ class Product(models.Model):
 
     class Meta :
         db_table = 'green_product'
+        managed = False
 
 class Company(models.Model):
     company_name = models.CharField(primary_key=True, max_length=20)
